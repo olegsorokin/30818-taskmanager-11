@@ -1,6 +1,8 @@
-const TASKS_COUNT = 3;
+"use strict";
 
-const getMenuTemplate = () => {
+const TASK_COUNT = 3;
+
+const createSiteMenuTemplate = () => {
   return (
     `<section class="control__btn-wrap">
       <input
@@ -33,7 +35,7 @@ const getMenuTemplate = () => {
   );
 };
 
-const getFiltersTemplate = () => {
+const createFilterTemplate = () => {
   return (
     `<section class="main__filter filter container">
       <input
@@ -97,29 +99,69 @@ const getFiltersTemplate = () => {
   );
 };
 
-const getSortTemplate = () => {
+const createBoardTemplate = () => {
   return (
-    `<div class="board__filter-list">
-      <a href="#" class="board__filter" data-sort-type="default">SORT BY DEFAULT</a>
-      <a href="#" class="board__filter" data-sort-type="date-up">SORT BY DATE up</a>
-      <a href="#" class="board__filter" data-sort-type="date-down">SORT BY DATE down</a>
-    </div>`
+    `<section class="board container">
+      <div class="board__filter-list">
+        <a href="#" class="board__filter">SORT BY DEFAULT</a>
+        <a href="#" class="board__filter">SORT BY DATE up</a>
+        <a href="#" class="board__filter">SORT BY DATE down</a>
+      </div>
+
+      <div class="board__tasks"></div>
+    </section>`
   );
 };
 
-const getBoardTemplate = () => {
+const createTaskTemplate = () => {
   return (
-    `<section class="board container"></section>`
-  );
-}
+    `<article class="card card--black">
+      <div class="card__form">
+        <div class="card__inner">
+          <div class="card__control">
+            <button type="button" class="card__btn card__btn--edit">
+              edit
+            </button>
+            <button type="button" class="card__btn card__btn--archive">
+              archive
+            </button>
+            <button
+              type="button"
+              class="card__btn card__btn--favorites card__btn--disabled"
+            >
+              favorites
+            </button>
+          </div>
 
-const getTasksTemplate = () => {
-  return (
-    `<div class="board__tasks"></div>`
-  );
-}
+          <div class="card__color-bar">
+            <svg class="card__color-bar-wave" width="100%" height="10">
+              <use xlink:href="#wave"></use>
+            </svg>
+          </div>
 
-const getTaskEditTemplate = () => {
+          <div class="card__textarea-wrap">
+            <p class="card__text">Example default task with default color.</p>
+          </div>
+
+          <div class="card__settings">
+            <div class="card__details">
+              <div class="card__dates">
+                <div class="card__date-deadline">
+                  <p class="card__input-deadline-wrap">
+                    <span class="card__date">23 September</span>
+                    <span class="card__time">16:15</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>`
+  );
+};
+
+const createTaskEditTemplate = () => {
   return (
     `<article class="card card--edit card--yellow card--repeat">
       <form class="card__form" method="get">
@@ -321,80 +363,29 @@ const getTaskEditTemplate = () => {
   );
 };
 
-const getTaskTemplate = () => {
-  return (
-    `<article class="card card--black card--deadline">
-      <div class="card__form">
-        <div class="card__inner">
-          <div class="card__control">
-            <button type="button" class="card__btn card__btn--edit">
-              edit
-            </button>
-            <button type="button" class="card__btn card__btn--archive">
-              archive
-            </button>
-            <button
-              type="button"
-              class="card__btn card__btn--favorites card__btn--disabled"
-            >
-              favorites
-            </button>
-          </div>
-
-          <div class="card__color-bar">
-            <svg class="card__color-bar-wave" width="100%" height="10">
-              <use xlink:href="#wave"></use>
-            </svg>
-          </div>
-
-          <div class="card__textarea-wrap">
-            <p class="card__text">This is task with missing deadline. Deadline always marked by red line.</p>
-          </div>
-
-          <div class="card__settings">
-            <div class="card__details">
-              <div class="card__dates">
-                <div class="card__date-deadline">
-                  <p class="card__input-deadline-wrap">
-                    <span class="card__date">23 September</span>
-                    <span class="card__time">16:15</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>`
-  );
-};
-
-const getLoadMoreButtonTemplate = () => {
+const createLoadMoreButtonTemplate = () => {
   return (
     `<button class="load-more" type="button">load more</button>`
   );
 };
 
-const render = (container, template, place = `beforeend`) => {
-  return container.insertAdjacentHTML(place, template);
+const render = (container, template, place) => {
+  container.insertAdjacentHTML(place, template);
 };
 
-const mainElement = document.querySelector('.main');
-const controlElement = document.querySelector('.control');
+const siteMainElement = document.querySelector(`.main`);
+const siteHeaderElement = siteMainElement.querySelector(`.main__control`);
 
-render(controlElement, getMenuTemplate());
-render(mainElement, getFiltersTemplate());
-render(mainElement, getBoardTemplate());
+render(siteHeaderElement, createSiteMenuTemplate(), `beforeend`);
+render(siteMainElement, createFilterTemplate(), `beforeend`);
+render(siteMainElement, createBoardTemplate(), `beforeend`);
 
-const boardElement = document.querySelector(`.board`);
-render(boardElement, getSortTemplate());
-render(boardElement, getTasksTemplate());
+const taskListElement = siteMainElement.querySelector(`.board__tasks`);
+const boardElement = siteMainElement.querySelector(`.board`);
+render(taskListElement, createTaskEditTemplate(), `beforeend`);
 
-const tasksElement = document.querySelector(`.board__tasks`);
-render(tasksElement, getTaskEditTemplate());
-
-for (let i = 0; i < TASKS_COUNT; i++) {
-  render(tasksElement, getTaskTemplate());
+for (let i = 0; i < TASK_COUNT; i++) {
+  render(taskListElement, createTaskTemplate(), `beforeend`);
 }
 
-render(boardElement, getLoadMoreButtonTemplate());
+render(boardElement, createLoadMoreButtonTemplate(), `beforeend`);
