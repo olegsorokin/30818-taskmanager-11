@@ -5,6 +5,7 @@ import {createSiteMenuTemplate} from "../src/components/site-menu";
 import {createSortingTemplate} from "../src/components/sorting";
 import {createTaskEditTemplate} from "../src/components/task-edit";
 import {createTaskTemplate} from "../src/components/task";
+import {generateFilters} from "../src/mock/filter";
 
 const TASK_COUNT = 3;
 
@@ -15,8 +16,10 @@ const render = (container, template, place) => {
 const siteMainElement = document.querySelector(`.main`);
 const siteHeaderElement = siteMainElement.querySelector(`.main__control`);
 
+const filters = generateFilters();
+
 render(siteHeaderElement, createSiteMenuTemplate(), `beforeend`);
-render(siteMainElement, createFilterTemplate(), `beforeend`);
+render(siteMainElement, createFilterTemplate(filters), `beforeend`);
 render(siteMainElement, createBoardTemplate(), `beforeend`);
 
 const boardElement = siteMainElement.querySelector(`.board`);
