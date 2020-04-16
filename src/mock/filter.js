@@ -3,10 +3,10 @@ const filterNames = [
 ];
 
 const generateFilters = () => {
-  return filterNames.map((filter) => {
+  return filterNames.map((it) => {
     return {
-      title: filter,
-      count: Math.floor(Math.random() * 10)
+      name: it,
+      count: Math.floor(Math.random() * 10),
     };
   });
 };
