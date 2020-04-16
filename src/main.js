@@ -1,14 +1,17 @@
-import {createBoardTemplate} from "../src/components/board";
-import {createFilterTemplate} from "../src/components/filter";
-import {createLoadMoreButtonTemplate} from "../src/components/load-more-button";
-import {createSiteMenuTemplate} from "../src/components/site-menu";
-import {createSortingTemplate} from "../src/components/sorting";
-import {createTaskEditTemplate} from "../src/components/task-edit";
-import {createTaskTemplate} from "../src/components/task";
-import {generateFilters} from "../src/mock/filter";
-import {generateTasks} from "../src/mock/task";
+import {createBoardTemplate} from "./components/board";
+import {createFilterTemplate} from "./components/filter";
+import {createLoadMoreButtonTemplate} from "./components/load-more-button";
+import {createTaskEditTemplate} from "./components/task-edit";
+import {createTaskTemplate} from "./components/task";
+import {createSiteMenuTemplate} from "./components/site-menu";
+import {createSortingTemplate} from "./components/sorting";
+import {generateFilters} from "./mock/filter";
+import {generateTasks} from "./mock/task";
 
-const TASK_COUNT = 3;
+
+const TASK_COUNT = 22;
+const SHOWING_TASKS_COUNT_ON_START = 8;
+const SHOWING_TASKS_COUNT_BY_BUTTON = 8;
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
@@ -30,8 +33,23 @@ const taskListElement = siteMainElement.querySelector(`.board__tasks`);
 render(boardElement, createSortingTemplate(), `afterbegin`);
 render(taskListElement, createTaskEditTemplate(tasks[0]), `beforeend`);
 
-for (let i = 1; i < tasks.length; i++) {
-  render(taskListElement, createTaskTemplate(tasks[i]), `beforeend`);
-}
+let showingTasksCount = SHOWING_TASKS_COUNT_ON_START;
+
+tasks.slice(1, showingTasksCount)
+  .forEach((task) => render(taskListElement, createTaskTemplate(task), `beforeend`));
 
 render(boardElement, createLoadMoreButtonTemplate(), `beforeend`);
+
+const loadMoreButton = boardElement.querySelector(`.load-more`);
+
+loadMoreButton.addEventListener(`click`, () => {
+  const prevTasksCount = showingTasksCount;
+  showingTasksCount = showingTasksCount + SHOWING_TASKS_COUNT_BY_BUTTON;
+
+  tasks.slice(prevTasksCount, showingTasksCount)
+    .forEach((task) => render(taskListElement, createTaskTemplate(task), `beforeend`));
+
+  if (showingTasksCount >= tasks.length) {
+    loadMoreButton.remove();
+  }
+});
