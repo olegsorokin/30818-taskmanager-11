@@ -15,3 +15,15 @@ export const createElement = (template) => {
 
   return newElement.firstChild;
 };
+
+export const RenderPosition = {
+  BEFOREEND: `beforeend`
+};
+
+export const render = (container, template, place) => {
+  switch (place) {
+    case RenderPosition.BEFOREEND:
+      container.append(template);
+      break;
+  }
+};
