@@ -8,3 +8,22 @@ export const formatTime = (date) => {
 
   return `${hours}:${minutes}`;
 };
+
+export const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
+export const RenderPosition = {
+  BEFOREEND: `beforeend`
+};
+
+export const render = (container, template, place) => {
+  switch (place) {
+    case RenderPosition.BEFOREEND:
+      container.append(template);
+      break;
+  }
+};
