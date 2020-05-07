@@ -1,4 +1,4 @@
-import {createElement} from "../utils";
+import {createElement} from "../utils.js";
 
 const createTasksTemplate = () => {
   return (
@@ -6,7 +6,8 @@ const createTasksTemplate = () => {
   );
 };
 
-export default class TaskEdit {
+
+export default class Tasks {
   constructor() {
     this._element = null;
   }

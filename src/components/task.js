@@ -2,7 +2,13 @@ import {MONTH_NAMES} from "../const.js";
 import {createElement, formatTime} from "../utils.js";
 
 
+// Функцию для генерации HTML-разметки можно превратить в метод класса,
+// однако делать мы этого не будем, потому что это не критично,
+// а функция у нас уже была описана
 const createTaskTemplate = (task) => {
+  // Обратите внимание, что всю работу мы производим заранее.
+  // Внутри шаблонной строки мы не производим никаких вычислений,
+  // потому что внутри большой разметки сложно искать какой-либо код
   const {description, dueDate, color, repeatingDays, isArchive, isFavorite} = task;
 
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
