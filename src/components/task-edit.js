@@ -1,5 +1,4 @@
 import {COLORS, DAYS, MONTH_NAMES} from "../const.js";
-import {createElement} from "../utils/render.js";
 import {formatTime} from "../utils/common.js";
 import AbstractComponent from "./AbstractComponent";
 
