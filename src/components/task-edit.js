@@ -1,6 +1,6 @@
 import {COLORS, DAYS, MONTH_NAMES} from "../const.js";
 import {formatTime} from "../utils/common.js";
-import AbstractComponent from "./AbstractComponent";
+import AbstractComponent from "./abstract-component";
 
 
 const createColorsMarkup = (colors, currentColor) => {
