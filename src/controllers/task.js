@@ -10,7 +10,6 @@ const Mode = {
 export default class TaskController {
   constructor(container, onDataChange, onViewChange) {
     this._container = container;
-
     this._onDataChange = onDataChange;
     this._onViewChange = onViewChange;
     this._mode = Mode.DEFAULT;
@@ -40,14 +39,13 @@ export default class TaskController {
 
     this._taskComponent.setFavoritesButtonClickHandler(() => {
       this._onDataChange(this, task, Object.assign({}, task, {
-        isFavorite: !task.isFavorite
-      }))
+        isFavorite: !task.isFavorite,
+      }));
     });
 
     this._taskEditComponent.setSubmitHandler((evt) => {
       evt.preventDefault();
       this._replaceEditToTask();
-      document.removeEventListener(`keydown`, this._onEscKeyDown);
     });
 
     if (oldTaskEditComponent && oldTaskComponent) {

@@ -70,8 +70,7 @@ const createTaskTemplate = (task) => {
         </div>
       </div>
     </div>
-  </article>`
-  );
+  </article>`);
 };
 
 export default class Task extends AbstractComponent {

@@ -1,9 +1,10 @@
 import LoadMoreButtonComponent from "../components/load-more-button.js";
 import NoTasksComponent from "../components/no-tasks.js";
 import SortComponent, {SortType} from "../components/sort.js";
+import TaskController from "./task.js";
 import TasksComponent from "../components/tasks.js";
-import TaskController from "../controllers/task.js";
 import {render, remove, RenderPosition} from "../utils/render.js";
+
 
 const SHOWING_TASKS_COUNT_ON_START = 8;
 const SHOWING_TASKS_COUNT_BY_BUTTON = 8;
@@ -11,7 +12,6 @@ const SHOWING_TASKS_COUNT_BY_BUTTON = 8;
 const renderTasks = (taskListElement, tasks, onDataChange, onViewChange) => {
   return tasks.map((task) => {
     const taskController = new TaskController(taskListElement, onDataChange, onViewChange);
-
     taskController.render(task);
 
     return taskController;
@@ -133,4 +133,3 @@ export default class BoardController {
     this._renderLoadMoreButton();
   }
 }
-
